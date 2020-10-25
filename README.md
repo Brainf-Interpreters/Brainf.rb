@@ -2,7 +2,7 @@
 
 `git clone https://github.com/SnowballSH/Ruby-BrainF` for no executable
 
-`git clone https://github.com/SnowballSH/Ruby-BrainF/tree/exe --branch exe` for executable
+`git clone https://github.com/SnowballSH/Ruby-BrainF --branch exe` for executable
 
 ## To use with ruby (All OS):
 
