@@ -4,6 +4,8 @@
 
 ## To run with executable (Windows):
 
+**MAKE SURE YOU PULLED THE EXE BRANCH**
+
 `.\bf.exe <FILENAME>`
 
 ## To build executable (Windows only):
