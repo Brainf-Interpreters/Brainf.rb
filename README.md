@@ -2,17 +2,9 @@
 
 `git clone https://github.com/SnowballSH/Ruby-BrainF` for no executable
 
-`git clone https://github.com/SnowballSH/Ruby-BrainF --branch exe` for executable
-
 ## To use with ruby (All OS):
 
 `ruby bf.rb <FILENAME>`
-
-## To run with executable (Windows):
-
-**MAKE SURE YOU PULLED THE EXE BRANCH**
-
-`.\bf.exe <FILENAME>`
 
 ## To build executable (Windows only):
 
