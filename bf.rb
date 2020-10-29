@@ -93,12 +93,15 @@ class Interpreter
 
       when LSHFT
         if @pointer == 0
-          @pointer = @data.size - 1
+          @pointer = 29999
         else
           @pointer -= 1
         end
       when RSHFT
         @pointer += 1
+        if @pointer >= 30000
+          @pointer = 0
+        end
         unless @data[@pointer]
           @data << 0
         end
