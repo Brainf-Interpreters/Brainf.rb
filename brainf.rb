@@ -69,7 +69,7 @@ end
 
 class Interpreter
   def initialize
-    @data = Array.new(1, 0)
+    @data = { 0 => 0 }
     @pointer = 0
   end
 
@@ -97,10 +97,12 @@ class Interpreter
         else
           @pointer -= 1
         end
+        @data[@pointer] = 0 unless @data[@pointer]
+
       when RSHFT
         @pointer += 1
         @pointer = 0 if @pointer == 256
-        @data << 0 unless @data[@pointer]
+        @data[@pointer] = 0 unless @data[@pointer]
 
       when OUTPUT
         print @data[@pointer].chr
@@ -126,7 +128,7 @@ def run(filename)
 
   puts "--------------\nOutput:\n"
   res2 = Interpreter.new.run(res1)
-  r = res2[0]
+  r = res2[0].values
   r.map!.with_index do |x, k|
     k == res2[1] ? "[#{x}]" : x.to_s
   end
