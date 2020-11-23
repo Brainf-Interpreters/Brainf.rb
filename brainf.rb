@@ -14,7 +14,7 @@ EOF     = 9
 
 class Node
   attr_accessor :op, :operand
-  def initialize(op, operand=nil)
+  def initialize(op, operand = nil)
     @op = op
     @operand = operand
   end
@@ -28,7 +28,7 @@ class Compiler
   def compile(code)
     nodes = []
     i = 0
-    for chr in code.split('') do
+    code.split('').each do |chr|
       case chr
       when '+'
         nodes << Node.new(INC)
@@ -50,7 +50,7 @@ class Compiler
           puts "On Char #{i}: Mismatched ']'"
           return FAILURE
         end
-        a = @stack.pop()
+        a = @stack.pop
         nodes[a].operand = i
         nodes << Node.new(CLOSE, a)
       else
@@ -75,7 +75,7 @@ class Interpreter
 
   def run(nodes)
     i = 0
-    while i < nodes.size do
+    while i < nodes.size
       node = nodes[i]
       case node.op
       when INC
@@ -93,63 +93,53 @@ class Interpreter
 
       when LSHFT
         if @pointer == 0
-          @pointer = 29999
+          @pointer = 255
         else
           @pointer -= 1
         end
       when RSHFT
         @pointer += 1
-        if @pointer >= 30000
-          @pointer = 0
-        end
-        unless @data[@pointer]
-          @data << 0
-        end
-      
+        @pointer = 0 if @pointer == 256
+        @data << 0 unless @data[@pointer]
+
       when OUTPUT
         print @data[@pointer].chr
       when INPUT
         @data[@pointer] = gets[0].ord % 256
 
       when OPEN
-        if @data[@pointer] == 0
-          i = node.operand
-        end
+        i = node.operand if @data[@pointer] == 0
       when CLOSE
-        if @data[@pointer] != 0
-          i = node.operand
-        end
+        i = node.operand if @data[@pointer] != 0
 
-      else
       end
       i += 1
     end
-    return [@data, @pointer]
+    [@data, @pointer]
   end
 end
 
 def run(filename)
   code = File.read(filename)
   res1 = Compiler.new.compile(code)
-  if res1 == 0
-    return FAILURE
-  end
+  return FAILURE if res1 == 0
+
   puts "--------------\nOutput:\n"
   res2 = Interpreter.new.run(res1)
   r = res2[0]
-  r.map!.with_index { |x, k| 
-    k == res2[1] ? "[#{x}]" : "#{x}"
-  }
-  puts "\nSlots:\n{ #{r.join(", ")} }\n--------------"
-  return SUCCESS
+  r.map!.with_index do |x, k|
+    k == res2[1] ? "[#{x}]" : x.to_s
+  end
+  puts "\nSlots:\n{ #{r.join(', ')} }\n--------------"
+  SUCCESS
 end
 
-def main()
+def main
   unless ARGV[0]
-    puts "File name expected"
+    puts 'File name expected'
     return FAILURE
   end
   run(ARGV[0])
 end
 
-main()
+main
